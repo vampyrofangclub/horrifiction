@@ -36,7 +36,7 @@ horrifiction_get_id_from_type<decltype(myLambda)>() //3
 struct MyStruct { int value; };
 auto myObj = new MyStruct{123};
 int myObjTypeId = horrifiction_get_id_from_type<decltype(myObj)>();
-void* myObjPtr = myStruct;
+void* myObjPtr = myObj;
 //and now matching back
 horrifiction_get_type_from_id(myObjTypeId, myObjPtr, [](auto myObj){
   std::cout << myObj->value; //123
@@ -57,7 +57,9 @@ horrifiction_get_type_from_id(myLambdaTypeId, myLambdaPtr, [](auto myLambda){
 struct Any {
   void* ptr;
   int typeId;
-  auto operator()(auto fn) { return horrifiction_get_type_from_id(typeId, ptr, fn); }
+  auto operator()(auto fn) {
+    return horrifiction_get_type_from_id(typeId, ptr, fn);
+  }
   static auto create(auto obj) {
     return Any{obj, horrifiction_get_id_from_type<decltype(obj)>()};
   }
@@ -101,7 +103,7 @@ int main(){
 }
 ```
 2) Example of using Any wrapper for returning different generic lambdas from function 
-(note: It's currently only possible using this library)
+(note: It's currently only possible using one unique approach (type loopholes) which is used in this library)
 ```
 auto getFn(bool flag) {
   if (flag) {
