@@ -1,3 +1,6 @@
+//Author: https://github.com/vampyrofangclub
+//Documentation and examples of usages: https://github.com/vampyrofangclub/horrifiction
+//License: The MIT License (https://opensource.org/license/mit/)
 template <int T>
 struct horrifiction_adl_tag {
   friend constexpr auto horrifiction_injected_func(horrifiction_adl_tag<T>);
