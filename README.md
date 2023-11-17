@@ -6,12 +6,12 @@ Small C++ header-only library which provides unique approach for type erasure
 This library consists of two helpers
 
 ```
-template <typename T> constexpr int __get_id_from_type()
+template <typename T> constexpr int horrifiction_get_id_from_type()
 ```
 Returns unique type id for provided type T
 
 ```
-constexpr bool __get_type_from_id_impl(int typeId, void* ptr, auto fn)
+constexpr bool horrifiction_get_type_from_id(int typeId, void* ptr, auto fn)
 ```
 Matches provided "typeId" and then invokes provided "fn" lambda callback 
 with argument which formed from casting provided "ptr" void* pointer 
@@ -21,24 +21,24 @@ to corresponding type. Returns bool flag if matching was succeeded
 
 ### Examples of getting unique id for different types
 ```
-__get_id_from_type<int>() //0
-__get_id_from_type<double>() //1
-__get_id_from_type<int>() //0
+horrifiction_get_id_from_type<int>() //0
+horrifiction_get_id_from_type<double>() //1
+horrifiction_get_id_from_type<int>() //0
 
 struct MyStruct { int value; };
-__get_id_from_type<MyStruct>() //2
+horrifiction_get_id_from_type<MyStruct>() //2
 
 auto myLambda = [](auto val){  return val + 1; };
-__get_id_from_type<decltype(myLambda)>() //3
+horrifiction_get_id_from_type<decltype(myLambda)>() //3
 ```
 ### Example of manual type erasure
 ```
 struct MyStruct { int value; };
 auto myObj = new MyStruct{123};
-int myObjTypeId = __get_id_from_type<decltype(myObj)>();
+int myObjTypeId = horrifiction_get_id_from_type<decltype(myObj)>();
 void* myObjPtr = myStruct;
 //and now matching back
-__get_type_from_id(myObjTypeId, myObjPtr, [](auto myObj){
+horrifiction_get_type_from_id(myObjTypeId, myObjPtr, [](auto myObj){
   std::cout << myObj->value; //123
 });
 ```
@@ -46,9 +46,9 @@ Same with lambda
 ```
 auto myLambda = [](auto val){  return val + 1; };
 void* myLambdaPtr = &myLambda;
-int myLambdaTypeId = __get_id_from_type<decltype(&myLambda)>();
+int myLambdaTypeId = horrifiction_get_id_from_type<decltype(&myLambda)>();
 //and now matching back
-__get_type_from_id(myLambdaTypeId, myLambdaPtr, [](auto myLambda){
+horrifiction_get_type_from_id(myLambdaTypeId, myLambdaPtr, [](auto myLambda){
   std::cout << (*myLambda)(123); //124
 });
 ```
@@ -57,9 +57,9 @@ __get_type_from_id(myLambdaTypeId, myLambdaPtr, [](auto myLambda){
 struct Any {
   void* ptr;
   int typeId;
-  auto operator()(auto fn) { return __get_type_from_id(typeId, ptr, fn); }
+  auto operator()(auto fn) { return horrifiction_get_type_from_id(typeId, ptr, fn); }
   static auto create(auto obj) {
-    return Any{obj, __get_id_from_type<decltype(obj)>()};
+    return Any{obj, horrifiction_get_id_from_type<decltype(obj)>()};
   }
 };
 ```
@@ -129,4 +129,4 @@ int main(){
   });
 }
 ```
-Here is godbolt demo of these examples: https://godbolt.org/z/6GfqE3bes
+Here is godbolt demo of these examples: [https://godbolt.org/z/6GfqE3bes](https://godbolt.org/z/1KGeb7Gra)
