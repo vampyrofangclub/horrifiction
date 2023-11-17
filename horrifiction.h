@@ -1,6 +1,8 @@
 //Author: https://github.com/vampyrofangclub
 //Documentation and examples of usages: https://github.com/vampyrofangclub/horrifiction
 //License: The MIT License (https://opensource.org/license/mit/)
+#ifndef HORRIFICTION
+#define HORRIFICTION
 template <int T>
 struct horrifiction_adl_tag {
   friend constexpr auto horrifiction_injected_func(horrifiction_adl_tag<T>);
@@ -41,3 +43,4 @@ constexpr bool horrifiction_get_type_from_id_impl(int typeId, void* ptr, auto fn
 constexpr bool horrifiction_get_type_from_id(int typeId, void* ptr, auto fn){
   return horrifiction_get_type_from_id_impl<0>(typeId, ptr, fn);
 }
+#endif
