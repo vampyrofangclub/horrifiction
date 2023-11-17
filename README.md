@@ -103,7 +103,7 @@ int main(){
 }
 ```
 2) Example of using Any wrapper for returning different generic lambdas from function 
-(note: It's currently only possible using one unique approach (type loopholes) which is used in this library)
+(note: it's currently only possible using one unique approach (type loopholes) which is used in this library)
 ```
 auto getFn(bool flag) {
   if (flag) {
@@ -131,4 +131,4 @@ int main(){
   });
 }
 ```
-Here is godbolt demo of these examples: [https://godbolt.org/z/6GfqE3bes](https://godbolt.org/z/1KGeb7Gra)
+Here is godbolt demo of these examples: https://godbolt.org/z/jWdGsP5Ks
