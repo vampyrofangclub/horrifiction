@@ -102,7 +102,7 @@ int main(){
   }
 }
 ```
-2) Example of using Any wrapper for returning different generic lambdas from function 
+#### 2) Example of using Any wrapper for returning different generic lambdas from function
 (note: it's currently only possible using one unique approach (type loopholes) which is used in this library)
 ```
 auto getFn(bool flag) {
